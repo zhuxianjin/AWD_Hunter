@@ -1,14 +1,15 @@
+#!/usr/bin/env python
 #coding: utf-8
 
-from app_common_class import SSHClient
-from app_common_class import Output
-from app_common_class import ShellCLI
-import paramiko
-import requests
-import json
-import cmd
 import os
 import re
+import cmd
+import json
+import paramiko
+import requests
+from app.app_common_class import SSHClient
+from app.app_common_class import Output
+from app.app_common_class import ShellCLI
 
 def sftp_upload_file(host,user,passwd,local_file,server_file):
     output=Output()
@@ -39,7 +40,7 @@ def addlog(username,passwd,host):
         addlog_user.exec_command('python /home/addlog.py set '+web_path+' /home/log-record.php')
         output.print_result("add log success to "+web_path)
     except Exception as error:
-        print "[\033[1;31merror\033[0m] %s" % (error)
+        print ("[\033[1;31merror\033[0m] %s" % (error))
 
 
 def unlog(username,passwd,host):
@@ -55,7 +56,7 @@ def unlog(username,passwd,host):
         unlog_user.exec_command('python /home/addlog.py unset '+web_path+' /home/log-record.php')
         output.print_result("you have unlog to "+web_path)
     except Exception as error:
-        print "[\033[1;31merror\033[0m] %s" % (error)
+        print ("[\033[1;31merror\033[0m] %s" % (error))
 
 
 def backup(username,passwd,host):
@@ -72,7 +73,7 @@ def backup(username,passwd,host):
         bac_user.exec_command('tar -czvf '+backup_path+' '+web_path)
         output.print_result("you have backed up "+web_path+" in "+backup_path)
     except Exception as error:
-        print "[\033[1;31merror\033[0m] %s" % (error)
+        print ("[\033[1;31merror\033[0m] %s" % (error))
 
 
 def getshell(host,method,passwd):
@@ -84,7 +85,7 @@ def getshell(host,method,passwd):
         shell.shell_cmd_loop()
         #shell.save_info('./runtime/shell.log') #可能会记录无用shell
     except Exception as error:
-        print "[\033[1;31merror\033[0m] %s" % (error)
+        print ("[\033[1;31merror\033[0m] %s" % (error))
 
 
 def ps():
@@ -94,16 +95,16 @@ def ps():
             log = json.load(json_file)
             ssh_id = 0
             shell_id = 0
-            print '-------------------SSH-------------------\n'
+            print ('-------------------SSH-------------------\n')
             for ssh in log['ssh']:
-                print '['+str(ssh_id)+']. '+ssh['username']+':'+ssh['passwd']+'@'+ssh['host']
+                print ('['+str(ssh_id)+']. '+ssh['username']+':'+ssh['passwd']+'@'+ssh['host'])
                 ssh_id = ssh_id + 1
-            print '-------------------SHELL-----------------\n'
+            print ('-------------------SHELL-----------------\n')
             for shell in log['shell']:
-                print '['+str(shell_id)+']. '+shell['url']+' '+shell['method']+' '+shell['passwd']
+                print ('['+str(shell_id)+']. '+shell['url']+' '+shell['method']+' '+shell['passwd'])
                 shell_id = shell_id + 1
     else:
-        print 'File not exist!'
+        print ('File not exist!')
 
 
 def ssh_interbak(host):
@@ -122,9 +123,9 @@ def ssh_interbak(host):
                     ssh_client = SSHClient(host, port, username, auth, timeout=5)
                     ssh_client.interaction()
                 else:
-                    print "Format Wrong!"
+                    print ("Format Wrong!")
     else:
-        print 'no '+file_path
+        print ('no '+file_path)
 
 
 def ssh_inter(num):
@@ -145,7 +146,7 @@ def ssh_inter(num):
                     break
                 ssh_id = ssh_id + 1
     else:
-        print 'no '+file_path
+        print ('no '+file_path)
 
 
 def g(num):
@@ -163,4 +164,4 @@ def g(num):
                     break
                 shell_id = shell_id + 1
     else:
-        print 'no '+file_path
+        print ('no '+file_path)

@@ -1,10 +1,18 @@
+#!/usr/bin/env python
 #coding: utf-8
 
-from app_func import addlog,unlog,backup,getshell,ps,g,ssh_inter
-import cmd
 import re
 import os
 import sys
+import cmd
+import shlex
+from app.app_func import g
+from app.app_func import ps
+from app.app_func import addlog
+from app.app_func import unlog
+from app.app_func import backup
+from app.app_func import getshell
+from app.app_func import ssh_inter
 
 class CLI(cmd.Cmd):
     def __init__(self):
@@ -16,22 +24,22 @@ class CLI(cmd.Cmd):
 
     def do_help(self, args):
         if args == "":
-            print "帮助"
-            print "------------"
-            print "addlog/add [username]:[password]@[host]    添加流量日志/Add log"
-            print "unlog/un [username]:[password]@[host]      卸载流量日志/Remove log"
-            print "backup/bac [username]:[password]@[host]    备份WEB目录/Back up the WEB directory"
-            print "------------"
-            print "getshell/get [url] [method] [passworld]    管理webshell/use webshell"
-            print "ssh [host]/[num]                           自动查找已连接过的主机进行ssh"
-            print "g   [num]                                  自动连接已记录过的webshell"
-            print "------------"
-            print "shell/s [command]                          使用shell命令/Use shell commands"
-            print "quit/q                                     退出工具/Quit"
+            print ("帮助")
+            print ("------------")
+            print ("addlog/add [username]:[password]@[host]    添加流量日志/Add log")
+            print ("unlog/un [username]:[password]@[host]      卸载流量日志/Remove log")
+            print ("backup/bac [username]:[password]@[host]    备份WEB目录/Back up the WEB directory")
+            print ("------------")
+            print ("getshell/get [url] [method] [passworld]    管理webshell/use webshell")
+            print ("ssh [host]/[num]                           自动查找已连接过的主机进行ssh")
+            print ("g   [num]                                  自动连接已记录过的webshell")
+            print ("------------")
+            print ("shell/s [command]                          使用shell命令/Use shell commands")
+            print ("quit/q                                     退出工具/Quit")
         elif args == "add":
-            print "example:>add user:pass@127.0.0.1"
+            print ("example:>add user:pass@127.0.0.1")
         else:
-            print "unknown command"
+            print ("unknown command")
 
     def do_addlog(self, args1):
         if re.match(r'.*?\:.*?\@.*?',args1):
@@ -40,7 +48,7 @@ class CLI(cmd.Cmd):
             host = args1.split(':')[1].split('@')[1]
             addlog(username,passwd,host)
         else:
-            print "Wrong!"
+            print ("Wrong!")
 
     def do_unlog(self, args1):
         if re.match(r'.*?\:.*?\@.*?',args1):
@@ -49,7 +57,7 @@ class CLI(cmd.Cmd):
             host = args1.split(':')[1].split('@')[1]
             unlog(username,passwd,host)
         else:
-            print "Wrong!"
+            print ("Wrong!")
 
     def do_backup(self, args1):
         if re.match(r'.*?\:.*?\@.*?',args1):
@@ -58,7 +66,7 @@ class CLI(cmd.Cmd):
             host = args1.split(':')[1].split('@')[1]
             backup(username,passwd,host)
         else:
-            print "Wrong!"
+            print ("Wrong!")
 
     def do_getshell(self, args1):
         comline = ' '.join(args1.split())

